@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.senai.sp.informatica.todolist.modelo.Lista;
+import br.senai.sp.informatica.todolist.modelo.itemLista;
 
 @Repository
 public class ListaDao {
@@ -32,5 +33,13 @@ public class ListaDao {
 	public void excluir(Long idLista) {
 		Lista lista = manager.find(Lista.class, idLista);
 		manager.remove(lista);
+	}
+	
+	@Transactional
+	public void excluirItem(Long idItem) {
+		itemLista item = manager.find(itemLista.class, idItem);
+		Lista lista = item.getLista();
+		lista.getItens().remove(item);
+		manager.merge(lista);
 	}
 }

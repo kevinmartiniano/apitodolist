@@ -63,4 +63,10 @@ public class ListaRestController {
 		listaDao.excluir(idLista);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@RequestMapping(value="/item/{idItem}", method=RequestMethod.DELETE)
+	public ResponseEntity<Void> excluirItem(@PathVariable long idItem) {
+		listaDao.excluirItem(idItem);
+		return ResponseEntity.noContent().build();
+	}
 }
