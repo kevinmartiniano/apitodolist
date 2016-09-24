@@ -69,4 +69,9 @@ public class ListaRestController {
 		listaDao.excluirItem(idItem);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@RequestMapping(value="/lista/{idLista}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public List<Lista> listarPorId (@PathVariable long idLista) {
+		return listaDao.listarPorId(idLista);
+	}
 }
