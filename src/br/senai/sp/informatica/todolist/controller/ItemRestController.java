@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import br.senai.sp.informatica.todolist.dao.ItemDao;
+import br.senai.sp.informatica.todolist.modelo.itemLista;
 
 @RestController
 public class ItemRestController {
@@ -31,6 +31,18 @@ public class ItemRestController {
 			URI location = new URI("/item/" + idItem);
 			responseHeader.setLocation(location);
 			return new ResponseEntity<>(responseHeader, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@RequestMapping(value="/lista/{idLista}/item", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<itemLista> addItem(@PathVariable Long idLista, @RequestBody itemLista item) {
+		try {
+			itemDao.inserir(idLista, item);
+			URI location = new URI("/item/" + item.getId());
+			return ResponseEntity.created(location).body(item);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
