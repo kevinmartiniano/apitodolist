@@ -1,6 +1,7 @@
 package br.senai.sp.informatica.todolist.controller;
 
 import java.net.URI;
+import java.util.List;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.senai.sp.informatica.todolist.dao.ItemDao;
+import br.senai.sp.informatica.todolist.modelo.Lista;
 import br.senai.sp.informatica.todolist.modelo.itemLista;
 
 @RestController
@@ -47,5 +49,10 @@ public class ItemRestController {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	
+	@RequestMapping(value="/item/{idItem}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public List<itemLista> listarPorId (@PathVariable long idItem) {
+		return itemDao.listarPorId(idItem);
 	}
 }

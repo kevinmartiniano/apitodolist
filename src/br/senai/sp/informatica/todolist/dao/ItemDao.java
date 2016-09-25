@@ -1,5 +1,7 @@
 package br.senai.sp.informatica.todolist.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -26,5 +28,11 @@ public class ItemDao {
 	public void inserir(Long idLista, itemLista item) {
 		item.setLista(manager.find(Lista.class, idLista));
 		manager.persist(item);
+	}
+	
+	public List<itemLista> listarPorId(Long idItem) {
+		TypedQuery<Lista> query =
+				manager.createQuery("SELECT i FROM Lista i WHERE i.id = :idItem", Lista.class).setParameter("idItem", idItem);
+		return query.getResultList();
 	}
 }
