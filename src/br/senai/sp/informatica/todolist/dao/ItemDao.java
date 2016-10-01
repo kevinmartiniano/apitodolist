@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,8 +31,7 @@ public class ItemDao {
 	}
 	
 	public List<itemLista> listarPorId(Long idItem) {
-		TypedQuery<Lista> query =
-				manager.createQuery("SELECT i FROM Lista i WHERE i.id = :idItem", Lista.class).setParameter("idItem", idItem);
+		TypedQuery<itemLista> query = manager.createQuery("SELECT i FROM itemLista WHERE i.id = " + idItem, itemLista.class);
 		return query.getResultList();
 	}
 }
